@@ -1,7 +1,13 @@
+import AudioBase from '../util/AudioBase.js';
+
 import { Remote } from "https://unpkg.com/@clinth/remote@latest/dist/index.mjs";
-import { getMinMaxAvg, getRandomArrayIndex } from '../util.js';
+import { clamp, scale, getMinMaxAvg, getRandomArrayIndex } from '../util.js';
+
 
 const r = new Remote();
+// Hack in AudioBase.js to change data processing
+const a = new AudioBase();
+
 
 
 function calculateAverage(freq) {
@@ -19,25 +25,50 @@ r.onData = (d) => {
     //console.log(d);
     const freq = d.freq;
     const wave = d.wave;
+    const index = 5;
 
     // If there's no frequency data, we're not interested
     if (!freq) return;
 
+    const frequency = a.getFrequencyAtIndex(index);
+
     const totalAverage = calculateAverage(freq);
-    const bottomEnd = freq.slice(0, 4);
-    const topEnd = freq.slice(freq.length - 4, freq.length);
+    const bottomEnd = freq.slice(0, 3);
+    const topEnd = freq.slice(freq.length - 3, freq.length);
 
     const averageBottomEnd = calculateAverage(bottomEnd);
     const averageTopEnd = calculateAverage(topEnd);
 
 
-    const relativeBottom = 1.0 - clamp(scale(averageBottomEnd, -40, -90, 0, 1));
+    const relativeBottom = 1.0 - clamp(scale(averageBottomEnd, -35, -50, 0, 1));
+    const relativeTop = 1.0 - clamp(scale(averageTopEnd, -100, -170, 0, 1));
 
-    const hue = (100 * relativeBottom) + 100;
+    let hue;
+
+    // Check if the value of relativeBottom is greater than 0.5
+    if (relativeBottom > 0.5) {
+        // Calculate the hue value based on the distance between relativeBottom and 1
+        // `100/relativeBottom` creates a number that is larger when relativeBottom is smaller, and smaller when relativeBottom is larger.
+        // `100 - (100 / relativeBottom)` subtracts this ratio from 100
+        hue = Math.abs(100 - (100 / relativeBottom));
+    }
+    else if (relativeTop > 0.5) {
+        hue = 100 + (100 * relativeTop);
+    }
+    else {
+        hue = 100; // Or some other default value
+    }
+
+
+    //const hue = (100 * relativeBottom) + 100;
+
     const hsl = `hsla(${hue}, 100%, 50%, 1)`;
 
     //console.log(`Total: ${totalAverage} bottom average: ${averageBottomEnd} top average: ${averageTopEnd}`);
-    console.log(hsl);
+    console.log(`relative bottom average: ${relativeBottom} relative top average: ${relativeTop}`);
+    //console.log(hsl);
+    //console.log(freq);
+
 
     document.body.style.backgroundColor = hsl;
     //console.log(f);
