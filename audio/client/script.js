@@ -1,11 +1,17 @@
-import {Remote} from "https://unpkg.com/@clinth/remote@latest/dist/index.mjs";
-import {getMinMaxAvg} from '../util.js';
+import { Remote } from "https://unpkg.com/@clinth/remote@latest/dist/index.mjs";
+import { getMinMaxAvg } from '../util.js';
 
 const r = new Remote({
-  ourId: 'ktppacj8ei13avongx8'
-  // If you're running your sketch locally and connecting to 
+
+  // If you're running your sketch locally and connecting to
   // a Glitch-hosted processor:
   // url: 'wss://your-project.glitch.me/ws'
+  remote: true,
+  useSockets: false,
+  useBroadcastChannel: true,
+  ourId: 'clint',
+  websocket: `wss://nvvi2.glitch.me/ws`,
+  allowNetwork: true
 });
 
 // When data is received from the Remote, do something with it...

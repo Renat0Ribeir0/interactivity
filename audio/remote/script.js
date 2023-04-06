@@ -1,12 +1,12 @@
 // This is the main script for the 'remote' page that
 // does some preliminary processing and sends data
 
-import {Remote} from "https://unpkg.com/@clinth/remote@latest/dist/index.mjs";
+import { Remote } from "https://unpkg.com/@clinth/remote@latest/dist/index.mjs";
 
 import Audio from './Audio.js';
 
 const r = new Remote({
-  useSockets: true,
+  useSockets: false,
   useBroadcastChannel: true
 });
 

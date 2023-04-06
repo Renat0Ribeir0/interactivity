@@ -4,7 +4,18 @@ import { Remote } from "https://unpkg.com/@clinth/remote@latest/dist/index.mjs";
 import { clamp, scale, getMinMaxAvg, getRandomArrayIndex } from '../util.js';
 
 
-const r = new Remote();
+const r = new Remote({
+
+    // If you're running your sketch locally and connecting to
+    // a Glitch-hosted processor:
+    // url: 'wss://your-project.glitch.me/ws'
+    //remote: true,
+    useSockets: false,
+    useBroadcastChannel: true,
+    //ourId: 'clint',
+    //websocket: `wss://nvvi2.glitch.me/ws`,
+    //allowNetwork: true
+});
 // Hack in AudioBase.js to change data processing
 const a = new AudioBase();
 
@@ -36,12 +47,16 @@ r.onData = (d) => {
     const bottomEnd = freq.slice(0, 3);
     const topEnd = freq.slice(freq.length - 3, freq.length);
 
+    //Using the phone to detect hissing with mouth shape
+    //const bottomEnd = freq.slice(29, 36);
+    //const topEnd = freq.slice(50, 57);
+
     const averageBottomEnd = calculateAverage(bottomEnd);
     const averageTopEnd = calculateAverage(topEnd);
 
 
-    const relativeBottom = 1.0 - clamp(scale(averageBottomEnd, -35, -50, 0, 1));
-    const relativeTop = 1.0 - clamp(scale(averageTopEnd, -100, -170, 0, 1));
+    const relativeBottom = 1.0 - clamp(scale(averageBottomEnd, -45, -80, 0, 1));
+    const relativeTop = 1.0 - clamp(scale(averageTopEnd, -40, -150, 0, 1));
 
     let hue;
 
