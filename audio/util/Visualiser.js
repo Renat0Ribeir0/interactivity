@@ -22,7 +22,8 @@ export default class Visualiser {
     this.pointerDelaying = false;
     this.pointerClickDelayMs = 100;
 
-    // Add HTML
+    // Add HTML 
+    // Renato: to change size of spectrogram window change heigh and width values (original was 200x400)
     parentElem.innerHTML = `
     <section>
       <button id="rendererComponentToggle">🔼</button>
@@ -32,7 +33,7 @@ export default class Visualiser {
           <div class="visPanel">
             <h2>Frequency distribution</h2>
             <br />
-            <canvas id="rendererComponentFreqData" height="200" width="400"></canvas>
+            <canvas id="rendererComponentFreqData" height="600" width="1200"></canvas> 
           </div>
           <div class="visPanel">
             <h2>Waveform</h2>
@@ -242,7 +243,7 @@ export default class Visualiser {
     };
     evt.preventDefault();
   }
-  
+
   getMinMax(data, start = 0, end = data.length) {
     if (end > data.length) throw new Error('end is past size of array');
     if (start < 0) throw new Error('start should be at least 0');
