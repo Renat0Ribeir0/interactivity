@@ -44,8 +44,8 @@ r.onData = (d) => {
     const frequency = a.getFrequencyAtIndex(index);
 
     const totalAverage = calculateAverage(freq);
-    const bottomEnd = freq.slice(0, 3);
-    const topEnd = freq.slice(freq.length - 3, freq.length);
+    const bottomEnd = freq.slice(0, 4);
+    const topEnd = freq.slice(freq.length - 4, freq.length);
 
     //Using the phone to detect hissing with mouth shape
     //const bottomEnd = freq.slice(29, 36);
@@ -55,8 +55,8 @@ r.onData = (d) => {
     const averageTopEnd = calculateAverage(topEnd);
 
 
-    const relativeBottom = 1.0 - clamp(scale(averageBottomEnd, -45, -80, 0, 1));
-    const relativeTop = 1.0 - clamp(scale(averageTopEnd, -40, -150, 0, 1));
+    const relativeBottom = 1.0 - clamp(scale(averageBottomEnd, -45, -100, 0, 1));
+    const relativeTop = 1.0 - clamp(scale(averageTopEnd, -40, -160, 0, 1));
 
     let hue;
 

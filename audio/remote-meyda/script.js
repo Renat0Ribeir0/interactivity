@@ -1,4 +1,4 @@
-import {Remote} from "https://unpkg.com/@clinth/remote@latest/dist/index.mjs";
+import { Remote } from "https://unpkg.com/@clinth/remote@latest/dist/index.mjs";
 import MeydaAudio from './MeydaAudio.js';
 
 const r = new Remote();
