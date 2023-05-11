@@ -69,7 +69,7 @@ export default class Thing {
     const degreeSpacing = Math.PI * 2 / t.deformations.length;
     ctx.beginPath();
 
-    const defaultDeformation = 0.5;
+    const defaultDeformation = 0;
     for (let i = 0; i < t.deformations.length; i++) {
       // Compute length of spike based on 'deformation' value
       let radius = (t.deformations[i]) ? t.deformations[i] : defaultDeformation;
