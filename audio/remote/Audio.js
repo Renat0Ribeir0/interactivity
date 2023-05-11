@@ -11,15 +11,15 @@ needed by the receiver.
 
 export default class Audio extends AudioBase {
   // Initialisation
-  constructor()  {
+  constructor() {
     super();
     this.computeFreq = true;
     this.computeWave = true;
   }
-  
+
   setup(audioCtx, stream) {
     console.log('General remote analyser setup');
-  
+
     const analyser = audioCtx.createAnalyser();
 
     const lowPassFilter = audioCtx.createBiquadFilter();
@@ -31,7 +31,7 @@ export default class Audio extends AudioBase {
     highPassFilter.type = 'highpass';
     highPassFilter.gain.value = -100;
     highPassFilter.frequency.value = 1;
-    
+
     // fftSize must be a power of 2. Higher values slower, more detailed
     // Range is 32-32768
     analyser.fftSize = 1024;
@@ -46,25 +46,25 @@ export default class Audio extends AudioBase {
     micSource.connect(lowPassFilter);
     lowPassFilter.connect(highPassFilter);
     highPassFilter.connect(analyser);
-    
+
     this.lowPassFilter = lowPassFilter;
     this.highPassFilter = highPassFilter;
     return analyser;
   }
-  
+
   loop(analyser) {
     const a = this.analyser;
     const bins = analyser.frequencyBinCount;
-    let result = { };
-    
+    let result = {};
+
     // Add frequency distribution
     let freq = null;
     if (this.computeFreq) {
       freq = new Float32Array(bins);
       a.getFloatFrequencyData(freq);
       result.freq = Array.from(freq);
-    } 
-    
+    }
+
     // Add wave data
     let wave = null;
     if (this.computeWave) {

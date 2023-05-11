@@ -44,9 +44,10 @@ r.onData = (d) => {
     const frequency = a.getFrequencyAtIndex(index);
 
     const totalAverage = calculateAverage(freq);
-    const bottomEnd = freq.slice(0, 4);
-    const topEnd = freq.slice(freq.length - 4, freq.length);
-
+    const bottomEnd = freq.slice(0, 10);
+    //const topEnd = freq.slice(freq.length - 90, freq.length);
+    const topEnd = freq.slice(100, 200);
+    //const topEnd = freq.slice(90, 900);
     //Using the phone to detect hissing with mouth shape
     //const bottomEnd = freq.slice(29, 36);
     //const topEnd = freq.slice(50, 57);
@@ -55,8 +56,8 @@ r.onData = (d) => {
     const averageTopEnd = calculateAverage(topEnd);
 
 
-    const relativeBottom = 1.0 - clamp(scale(averageBottomEnd, -45, -100, 0, 1));
-    const relativeTop = 1.0 - clamp(scale(averageTopEnd, -40, -160, 0, 1));
+    const relativeBottom = 1.0 - clamp(scale(averageBottomEnd, -40, -60, 0, 1));
+    const relativeTop = 1.0 - clamp(scale(averageTopEnd, -40, -200, 0, 1));
 
     let hue;
 
@@ -79,8 +80,8 @@ r.onData = (d) => {
 
     const hsl = `hsla(${hue}, 100%, 50%, 1)`;
 
-    //console.log(`Total: ${totalAverage} bottom average: ${averageBottomEnd} top average: ${averageTopEnd}`);
-    console.log(`relative bottom average: ${relativeBottom} relative top average: ${relativeTop}`);
+    console.log(`Total: ${totalAverage} bottom average: ${averageBottomEnd} top average: ${averageTopEnd}`);
+    //console.log(`relative bottom average: ${relativeBottom} relative top average: ${relativeTop}`);
     //console.log(hsl);
     //console.log(freq);
 
