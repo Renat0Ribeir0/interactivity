@@ -91,8 +91,8 @@ function process(d) {
   //Only trigger movement if sound produced is louder than noise floor
   //We can change the trigger point by changing the 0.x value
   //Scaled the values to 0-1 to have a smoother movement
-  relativeBottom = relativeBottom < 0.6 ? 0 : scale(relativeBottom, 0.6, 1, 0, 2);
-  relativeTop = relativeTop < 0.6 ? 0 : scale(relativeTop, 0.6, 1, 0, 2);
+  relativeBottom = relativeBottom < 0.6 ? 0 : scale(relativeBottom, 0.6, 1, 0, 1.5);
+  relativeTop = relativeTop < 0.6 ? 0 : scale(relativeTop, 0.6, 1, 0, 1.5);
 
   // If relativeBottom is higher than relativeTop, move to the left and vice versa
   if (relativeBottom > relativeTop) {
