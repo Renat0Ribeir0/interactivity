@@ -77,17 +77,22 @@ function process(d) {
 
     // Increases deformation by the new average
     if (!t.deformations[i]) t.deformations[i] = 0; // Not yet set
-    t.deformations[i] += d;
+    t.deformations[i] += (d * d); // To make it less sensitve, square the result to make it low input values output lower values and vice versa. 
   }
 
-  // 3. Change background color based on the averaging of FFT bins
-  let c = Math.abs(freqD.avg);  // Get the average of all bins and make it positive
+
+  // 3. Change background color based on the averaging of ALL FFT bins
+  let c = 1 - (Math.abs(freqD.avg) / 100);  // Get the average of all bins and make it positive
+  c = clamp(c, 0, 1); // Clamp it to 0-1
+  c = scale(c, 0, 1, 0, 380) // Scale it to 0-380
+  //c = clamp(c, 0, 1); // Clamp it to 0-1
   // Invert the scale so loud sounds produce higher average values and vice versa. Also scale it to 0-180. 
-  // IMP: change first value in scale to higher to make ir react to softer sounds. 
-  c = scale(c, 80, 40, 0, 180)
-  c = clamp(c, 0, 180) // Ignore negative values and values above 180
+  // IMP: change first value in scale to higher to make it react to softer sounds. 
+  //c = scale(c, 80, 40, 0, 180)
+  //c = clamp(c, 0, 180) // Ignore negative values and values above 180
 
   hue = 180 - c; // Subtract the c value from 180 to get the hue value for the background
+  hue = clamp(hue, 0, 180); // Make sure that hue is between 0 and 180. 
 }
 
 // Called whenever the window resizes. Fit canvas
