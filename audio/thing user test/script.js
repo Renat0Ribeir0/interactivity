@@ -84,7 +84,7 @@ function process(d) {
   // 3. Change background color based on the averaging of ALL FFT bins
   let c = 1 - (Math.abs(freqD.avg) / 100);  // Get the average of all bins and make it positive
   c = clamp(c, 0, 1); // Clamp it to 0-1
-  c = scale(c, 0, 1, 0, 380) // Scale it to 0-380
+  c = scale(c, 0, 1, 0, 300) // Scale it to 0-380
   //c = clamp(c, 0, 1); // Clamp it to 0-1
   // Invert the scale so loud sounds produce higher average values and vice versa. Also scale it to 0-180. 
   // IMP: change first value in scale to higher to make it react to softer sounds. 
